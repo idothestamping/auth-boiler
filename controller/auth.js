@@ -14,6 +14,18 @@ router.post('/login', passport.authenticate('local', {
 	failureFlash: 'Invalid Credentials'
 }));
 
+//facebook authenticate
+router.get('/facebook', passport.authenticate('facebook', {
+	scope: ['public_profile', 'email']
+}))
+
+router.get('/callback/facebook', passport.authenticate('facebook', {
+	successRedirect: '/profile',
+	successFlash: 'Facebook login successful',
+	failureRedirect: '/auth/login',
+	failureFlash: 'Oops, Facebook as failed you.'
+}))
+
 router.get('/signup', function(req, res){
 	res.render('auth/signup', { previousData: null});
 });
